@@ -1,0 +1,27 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: social_media_scheduler_development
+  username: <%= ENV.fetch("DATABASE_USER") { "mukhe" } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { "shiva@12345" } %>
+  host: localhost
+
+test:
+  <<: *default
+  database: social_media_scheduler_test
+  username: <%= ENV.fetch("DATABASE_USER") { "mukhe" } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { "shiva@12345" } %>
+  host: localhost
+
+production:
+  <<: *default
+  database: social_media_scheduler_production
+  username: <%= ENV["SOCIAL_MEDIA_SCHEDULER_DATABASE_USERNAME"] %>
+  password: <%= ENV["SOCIAL_MEDIA_SCHEDULER_DATABASE_PASSWORD"] %>
+  host: <%= ENV["SOCIAL_MEDIA_SCHEDULER_DATABASE_HOST"] %>
+
+

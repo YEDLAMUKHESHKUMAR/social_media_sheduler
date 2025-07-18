@@ -1,0 +1,66 @@
+<div class="dashboard-header">
+  <h1>Dashboard</h1>
+  <%= link_to "Create New Post", new_post_path, class: "btn btn-primary" %>
+</div>
+
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <div class="stat-number"><%= @posts.count %></div>
+    <div class="stat-label">Total Posts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number"><%= @drafts.count %></div>
+    <div class="stat-label">Drafts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number"><%= @scheduled.count %></div>
+    <div class="stat-label">Scheduled</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number"><%= @published.count %></div>
+    <div class="stat-label">Published</div>
+  </div>
+</div>
+
+<% if @posts.any? %>
+  <div class="posts-grid">
+    <% @posts.each do |post| %>
+      <div class="post-card">
+        <div class="post-header">
+          <span class="post-status status-<%= post.status %>">
+            <%= post.status.capitalize %>
+          </span>
+          <div class="post-actions">
+            <%= link_to "View", post, class: "btn btn-secondary btn-sm" %>
+            <%= link_to "Edit", edit_post_path(post), class: "btn btn-secondary btn-sm" %>
+            <%= button_to "Delete", post, method: :delete, 
+                confirm: "Are you sure?", 
+                class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+        
+        <div class="post-content">
+          <%= truncate(post.content, length: 200) %>
+        </div>
+        
+        <div class="post-meta">
+          <% if post.scheduled_at %>
+            <strong>Scheduled for:</strong> <%= post.scheduled_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% end %>
+          <% if post.published_at %>
+            <strong>Published:</strong> <%= post.published_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% end %>
+          <br>
+          <strong>Created:</strong> <%= post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center">
+    <h2>No posts yet</h2>
+    <p>Create your first post to get started!</p>
+    <%= link_to "Create New Post", new_post_path, class: "btn btn-primary mt-2" %>
+  </div>
+<% end %>
+

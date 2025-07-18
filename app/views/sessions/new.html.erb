@@ -1,0 +1,36 @@
+<div class="form-container">
+  <h1 class="text-center mb-2">Login to Your Account</h1>
+  
+  <%= form_with url: login_path, method: :post, local: true do |form| %>
+    <div class="form-group">
+      <%= form.label :email, class: "form-label" %>
+      <%= form.email_field :email, class: "form-input", required: true %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :password, class: "form-label" %>
+      <%= form.password_field :password, class: "form-input", required: true %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.submit "Login", class: "btn btn-primary w-full" %>
+    </div>
+  <% end %>
+  
+  <div class="text-center mt-2">
+    <p>Or connect with:</p>
+    <%= link_to "/auth/twitter", method: :post, class: "btn btn-twitter w-full mt-2" do %>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.37-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.53 7.6 3.6 5.36c-.36.62-.56 1.35-.56 2.13 0 1.49.75 2.81 1.88 3.59-.69-.02-1.34-.21-1.91-.53v.03c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.28 0-.55-.03-.81-.08.55 1.71 2.14 2.95 4.03 2.98-1.48 1.16-3.35 1.85-5.38 1.85-.35 0-.69-.02-1.03-.06C3.17 20.57 5.32 21 7.5 21c8.99 0 13.92-7.46 13.92-13.92 0-.21-.01-.42-.02-.63.96-.69 1.79-1.56 2.45-2.55z"/>
+        </svg>
+
+
+        Connect with Twitter
+    <% end %>
+  </div>
+  
+  <div class="text-center mt-2">
+    <p>Don't have an account? <%= link_to "Sign up here", signup_path %></p>
+  </div>
+</div>
+

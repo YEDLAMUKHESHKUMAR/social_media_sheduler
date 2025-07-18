@@ -1,0 +1,66 @@
+<div class="form-container">
+  <h1 class="text-center mb-2">Create New Post</h1>
+  
+  <%= form_with model: @post, local: true do |form| %>
+    <% if @post.errors.any? %>
+      <div class="alert alert-error">
+        <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="form-group">
+      <%= form.label :content, "Post Content", class: "form-label" %>
+      <%= form.text_area :content, class: "form-textarea", 
+          placeholder: "What would you like to share on LinkedIn?", 
+          required: true %>
+      <small>Maximum 3000 characters</small>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :status, class: "form-label" %>
+      <%= form.select :status, 
+          options_for_select([
+            ['Save as Draft', 'draft'],
+            ['Schedule for Later', 'scheduled']
+          ], @post.status), 
+          {}, 
+          { class: "form-input", id: "post_status" } %>
+    </div>
+    
+    <div class="form-group" id="scheduled_at_group" style="display: none;">
+      <%= form.label :scheduled_at, "Schedule Date & Time", class: "form-label" %>
+      <%= form.datetime_local_field :scheduled_at, class: "form-input" %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.submit "Create Post", class: "btn btn-primary w-full" %>
+    </div>
+  <% end %>
+  
+  <div class="text-center mt-2">
+    <%= link_to "Back to Dashboard", dashboard_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const statusSelect = document.getElementById('post_status');
+    const scheduledAtGroup = document.getElementById('scheduled_at_group');
+    
+    function toggleScheduledAt() {
+      if (statusSelect.value === 'scheduled') {
+        scheduledAtGroup.style.display = 'block';
+      } else {
+        scheduledAtGroup.style.display = 'none';
+      }
+    }
+    
+    statusSelect.addEventListener('change', toggleScheduledAt);
+    toggleScheduledAt(); // Initial check
+  });
+</script>
+

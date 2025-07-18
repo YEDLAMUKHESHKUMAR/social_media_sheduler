@@ -1,0 +1,50 @@
+<div class="form-container">
+  <h1 class="text-center mb-2">Create Your Account</h1>
+  
+  <%= form_with model: @user, url: signup_path, local: true do |form| %>
+    <% if @user.errors.any? %>
+      <div class="alert alert-error">
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="form-group">
+      <%= form.label :first_name, class: "form-label" %>
+      <%= form.text_field :first_name, class: "form-input", required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :last_name, class: "form-label" %>
+      <%= form.text_field :last_name, class: "form-input", required: true %>
+    </div>
+
+    
+    <div class="form-group">
+      <%= form.label :email, class: "form-label" %>
+      <%= form.email_field :email, class: "form-input", required: true %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :password, class: "form-label" %>
+      <%= form.password_field :password, class: "form-input", required: true %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
+      <%= form.password_field :password_confirmation, class: "form-input", required: true %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.submit "Create Account", class: "btn btn-primary w-full" %>
+    </div>
+  <% end %>
+  
+  <div class="text-center mt-2">
+    <p>Already have an account? <%= link_to "Login here", login_path %></p>
+  </div>
+</div>
+

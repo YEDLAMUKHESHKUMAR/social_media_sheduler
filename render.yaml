@@ -1,0 +1,57 @@
+databases:
+  - name: social-media-scheduler-db
+    databaseName: social_media_scheduler_production
+    user: social_media_scheduler
+
+services:
+  - type: redis
+    name: social-media-scheduler-redis
+    ipAllowList: []
+
+  - type: web
+    name: social-media-scheduler
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: social-media-scheduler-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: social-media-scheduler-redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: TWITTER_API_KEY
+        sync: false
+      - key: TWITTER_API_SECRET
+        sync: false
+      - key: SECRET_KEY_BASE
+        sync: false
+
+  - type: worker
+    name: social-media-scheduler-worker
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec sidekiq"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: social-media-scheduler-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: social-media-scheduler-redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: TWITTER_API_KEY
+        sync: false
+      - key: TWITTER_API_SECRET
+        sync: false
+      - key: SECRET_KEY_BASE
+        sync: false

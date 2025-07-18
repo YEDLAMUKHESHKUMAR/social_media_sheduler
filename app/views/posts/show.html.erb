@@ -1,0 +1,48 @@
+<div class="form-container">
+  <div class="post-header">
+    <h1>Post Details</h1>
+    <span class="post-status status-<%= @post.status %>">
+      <%= @post.status.capitalize %>
+    </span>
+  </div>
+  
+  <div class="form-group">
+    <label class="form-label">Content</label>
+    <div class="post-content">
+      <%= simple_format(@post.content) %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="form-label">Platform</label>
+    <p><%= @post.platform.capitalize %></p>
+  </div>
+  
+  <% if @post.scheduled_at %>
+    <div class="form-group">
+      <label class="form-label">Scheduled For</label>
+      <p><%= @post.scheduled_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+    </div>
+  <% end %>
+  
+  <% if @post.published_at %>
+    <div class="form-group">
+      <label class="form-label">Published At</label>
+      <p><%= @post.published_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <label class="form-label">Created</label>
+    <p><%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+  </div>
+  
+  <div class="post-actions">
+    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-secondary" %>
+    <%= button_to "Delete", @post, method: :delete, 
+        confirm: "Are you sure?", 
+        class: "btn btn-danger" %>
+    <%= link_to "Back to Dashboard", dashboard_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
