@@ -5,4 +5,6 @@ set -o errexit
 bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
-# Skip db:migrate during build - it will run when the service starts
+
+# Run database migrations
+bundle exec rails db:migrate
